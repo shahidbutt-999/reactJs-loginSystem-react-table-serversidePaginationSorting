@@ -1,0 +1,16 @@
+#form-con {
+    border: 1px solid white;
+    border-radius: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    font-size: 2rem;
+    padding: 0rem 1.5rem 1rem 1.5rem;
+    min-width: 35vmin;
+
+}
+
+.d-none {
+    display: none;
+}

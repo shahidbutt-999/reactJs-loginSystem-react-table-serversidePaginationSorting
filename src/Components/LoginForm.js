@@ -1,29 +1,41 @@
-import "./LoginForm.css"
-import React from 'react'
+import "./LoginForm.css";
+import React, { useRef } from 'react';
+import { useNavigate } from "react-router-dom";
+// import {Link} from 'react-router-dom';
 
 function LoginForm({ nameP, passwordP, setNameP, setPasswordP }) {
+    const navigate = useNavigate();
     const handleNameChange = (e) => {
         setNameP(e.target.value);
     }
     const handlePassowrdChange = (e) => {
         setPasswordP(e.target.value);
     }
-    const submitLogin = () => {
+    const submitLogin = (e) => {
         // confirm from sessiong storage pending 
+        e.preventDefault();
+
         console.log("form submistion", nameP, passwordP);
-        if (nameP === "shahidbutt" && passwordP === "123") {
+        let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+        if (userInfo && nameP === userInfo.name && passwordP === userInfo.password) {
             setNameP("");
             setPasswordP("");
-            alert("Login Succusfull");
+            navigate("/homescreen");
         }
         else {
-            alert("please enter corrent user name & password");
+            if (userInfo == null) {
+                alert("Please register login");
+            }
+            else {
+                alert("Wrong User name and password");
+            }
+
         }
 
     }
     return (
         <>
-            <form onSubmit={submitLogin} className="login-fom-con">
+            <form onSubmit={(e) => submitLogin(e)} className="login-fom-con">
                 <h2 id="lf-title"> Login Form </h2>
                 <input
                     onChange={(e) => handleNameChange(e)}

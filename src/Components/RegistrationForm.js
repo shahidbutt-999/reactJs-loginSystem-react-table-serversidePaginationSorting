@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import './RegistrationForm.css';
-import { useNavigate } from 'react-router-dom';
 
-function RegistrationForm() {
+function RegistrationForm({ setForm }) {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
     const nameHandler = (e) => {
         setName(e.target.value);
     }
@@ -13,12 +11,12 @@ function RegistrationForm() {
         setPassword(e.target.value);
     }
     const handleSignUp = (e) => {
-        console.log(name, password);
-
         // add user into sesssion storage
+        e.preventDefault();
 
         sessionStorage.setItem('userInfo', JSON.stringify({ "name": name, "password": password }));
         alert("user Registered");
+        setForm(0);
 
     }
     return (

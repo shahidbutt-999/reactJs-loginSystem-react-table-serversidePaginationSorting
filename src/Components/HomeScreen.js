@@ -1,11 +1,57 @@
 import React from 'react';
 import './HomeScreen.css';
+import { useState } from 'react';
+import dataObj from "../Data/Sidebar.json";
+import { Link, Outlet } from 'react-router-dom';
+
 
 function HomeScreen() {
+    // console.log(data);
+    const [data, setData] = useState(dataObj);
+    const sidbarActive = (e, id) => {
+        setData(
+            data.map((element) => {
+                if (element.id == id) {
+                    element.active = true;
+                    return element;
+                }
+                element.active = false;
+                return element;
+            })
+        );
+    }
     return (
-        <main id='home-screen' className='App-header'>
-            <h1>HomeScreen</h1>
-        </main>
+        <section id='home-screen' className='row'>
+
+            <div id='sidebar' className="col-2 d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+
+                <Link
+                    to={"/"}
+                    className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+                >
+                    Log Out
+                </Link>
+                <hr />
+                <ul className="nav nav-pills flex-column mb-auto">
+                    {data.map((e) => (
+                        <li className='nav-item' key={e.id}>
+                            <Link
+                                to={e.id != 0 ? "/homescreen/" + e.id : "/homescreen"}
+                                onClick={(innerElm) => sidbarActive(innerElm, e.id)}
+                                className={e.active === true ? 'nav-link active text-white' : 'nav-link text-white'}>
+                                {e.name}
+
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+                <hr />
+
+            </div>
+
+            <Outlet />
+
+        </section>
     )
 }
 

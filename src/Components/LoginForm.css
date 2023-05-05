@@ -17,13 +17,15 @@
 }
 
 input {
-    border-radius: 2%;
+    border-radius: 3px;
     box-sizing: border-box;
     padding: 1rem 1.5rem;
     width: 100%;
     border: 1px solid white;
     background: transparent;
     color: white;
+    font-size: 0.6em !important;
+
 
 }
 
@@ -51,7 +53,7 @@ input[type="button"] {
     color: white;
     width: fit-content;
     border: 1px solid white;
-    border-radius: 10%;
+    border-radius: 3px;
     cursor: pointer;
     transition-duration: 0.2s;
 
@@ -60,7 +62,7 @@ input[type="button"] {
 input[type="button"] {
     margin-right: 0.5em;
     background-color: white;
-    color: black
+    color: black;
 }
 
 input[type="button"]:hover {

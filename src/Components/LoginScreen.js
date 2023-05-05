@@ -23,7 +23,11 @@ function LoginScreen() {
     return (
         <section id="form-con">
             {formEnabler ?
-                (<RegistrationForm />) :
+                (<RegistrationForm
+                    setForm={setFromEnabler}
+                />
+
+                ) :
                 (<LoginForm
                     nameP={name}
                     passwordP={password}
@@ -40,6 +44,7 @@ function LoginScreen() {
                     id="sign-up"
                     value={"Sign Up"}
                 />
+
                 <input
                     onClick={(e) => handleFormChange(e.target.name)}
                     className={formEnabler ? '' : 'd-none'}

@@ -1,3 +1,19 @@
 #home-screen {
     background-color: #282c34;
+    min-height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    color: white;
+    font-size: 1.6rem;
+    /* border: 5px solid white; */
+    box-sizing: border-box;
+}
+
+#home-screen h1 {
+    margin: 0px;
+}
+
+#sidebar {
+    /* border: 1px solid yellow; */
+    /* width: 300px; */
 }

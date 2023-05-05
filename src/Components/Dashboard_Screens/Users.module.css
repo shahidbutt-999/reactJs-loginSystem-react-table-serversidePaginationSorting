@@ -1,0 +1,15 @@
+.usersNav {
+    margin-top: 10px;
+    overflow: auto;
+    margin-bottom: 2rem;
+    margin-top: 15rem;
+}
+
+.usersNav button {
+    float: right;
+    background-color: #0D6EFD;
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 5px;
+    border: none;
+}

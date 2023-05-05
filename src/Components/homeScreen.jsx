@@ -1,17 +1,20 @@
 import React from 'react';
-import './HomeScreen.css';
+import './homeScreen.css';
 import { useState } from 'react';
-import dataObj from "../Data/Sidebar.json";
+import dataObj from "../data/sidebar.json";
 import { Link, Outlet } from 'react-router-dom';
 
 
-function HomeScreen() {
+const HomeScreen = () => {
     // console.log(data);
     const [data, setData] = useState(dataObj);
-    const sidbarActive = (e, id) => {
+    const handleLogout = () => {
+        sessionStorage.clear();
+    }
+    const sidbarActive = (element, id) => {
         setData(
             data.map((element) => {
-                if (element.id == id) {
+                if (element.id === id) {
                     element.active = true;
                     return element;
                 }
@@ -27,6 +30,7 @@ function HomeScreen() {
 
                 <Link
                     to={"/"}
+                    onClick={handleLogout}
                     className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
                 >
                     Log Out
@@ -36,11 +40,10 @@ function HomeScreen() {
                     {data.map((e) => (
                         <li className='nav-item' key={e.id}>
                             <Link
-                                to={e.id != 0 ? "/homescreen/" + e.id : "/homescreen"}
+                                to={e.id !== 0 ? "/homescreen/" + e.id : "/homescreen"}
                                 onClick={(innerElm) => sidbarActive(innerElm, e.id)}
                                 className={e.active === true ? 'nav-link active text-white' : 'nav-link text-white'}>
                                 {e.name}
-
                             </Link>
                         </li>
                     ))}

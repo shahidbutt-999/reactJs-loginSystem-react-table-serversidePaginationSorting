@@ -1,5 +1,4 @@
-import "./LoginForm.css";
-import React, { useRef } from 'react';
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 // import {Link} from 'react-router-dom';
 
@@ -60,7 +59,7 @@ function LoginForm({ nameP, passwordP, setNameP, setPasswordP }) {
                     id="submit"
                     value={"Log In"}
                 />
-                <a href="#"> Don't have an account ?</a>
+                <p> Don't have an account ?</p>
             </form>
 
 

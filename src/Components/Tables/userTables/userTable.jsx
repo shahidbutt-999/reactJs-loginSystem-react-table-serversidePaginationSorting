@@ -1,14 +1,13 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTable, useSortBy, usePagination } from 'react-table'
-import { Columns } from "./UserColumn";
-import DummyData from "../../../Data/UserTableData.json";
-import classes from "./UserTable.module.css";
+import { Columns } from "./userColumn";
+import classes from "../../../assets/css/adminPage/usersScreen/userTable.module.css";
 import { GiEruption, GiFallDown } from "react-icons/gi";
 
-function UserTable() {
-    const [tableData, setTableData] = useState();
+function UserTable(props) {
     const columns = useMemo(() => Columns, []);
-    const data = useMemo(() => DummyData, []);
+    // const data = useMemo(() => props.tableData, []);
+    const data = props.tableData;
     const {
         getTableProps,
         getTableBodyProps,

@@ -1,9 +1,7 @@
 import React from 'react';
-import { useState, useRef } from 'react';
-import LoginForm from './LoginForm.js';
-import RegistrationForm from './RegistrationForm.js'
-import './LoginScreen.css';
-
+import { useState } from 'react';
+import LoginForm from './loginForm.jsx';
+import RegistrationForm from './registrationForm.jsx'
 
 function LoginScreen() {
     const [formEnabler, setFromEnabler] = useState(0);
@@ -11,15 +9,13 @@ function LoginScreen() {
     const [password, setPassword] = useState("");
     // setting form switch should work or not
     const handleFormChange = (e) => {
-        // console.log("CAll from Handle Form Enabler", formEnabler, e);
-        if (e == "sign-up" && formEnabler == 0) {
+        if (e === "sign-up" && formEnabler === 0) {
             setFromEnabler(1);
         }
-        if (e == "log-in" && formEnabler == 1) {
+        if (e === "log-in" && formEnabler === 1) {
             setFromEnabler(0);
         }
     }
-
     return (
         <section id="form-con">
             {formEnabler ?
@@ -57,5 +53,4 @@ function LoginScreen() {
         </section>
     )
 }
-
 export default LoginScreen

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './RegistrationForm.css';
 
 function RegistrationForm({ setForm }) {
     const [name, setName] = useState("");
@@ -45,8 +44,8 @@ function RegistrationForm({ setForm }) {
                 id="submit"
                 value={"Sign Up"}
             />
-            <a href="#"> Already have an account ?</a>
-        </form>
+            <p> Already have an account ?</p>
+        </form >
     )
 }
 

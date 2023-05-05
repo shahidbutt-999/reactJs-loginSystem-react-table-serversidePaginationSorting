@@ -27,3 +27,10 @@
 .App-link {
   color: #61dafb;
 }
+
+@import "./assets/css/adminPage/usersScreen/userInputForm.module.css";
+@import "./assets/css/adminPage/usersScreen/userInputModal.module.css";
+@import "./assets/css/adminPage/usersScreen/userTable.module.css";
+@import "./assets/css/loginSignupPage/loginScreen.css";
+@import "./assets/css/loginSignupPage/registrationForm.css";
+@import "./assets/css/loginSignupPage/form/loginForm.css";

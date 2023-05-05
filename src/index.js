@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import HomeScreen from './Components/HomeScreen';
-import Users from './Components/Dashboard_Screens/Users';
-import Dashboard from './Components/Dashboard_Screens/Dashboard';
-import Orders from './Components/Dashboard_Screens/Orders';
-import Products from './Components/Dashboard_Screens/Products';
-import Customers from './Components/Dashboard_Screens/Customers';
+import App from './app';
+import HomeScreen from './components/homeScreen';
+import Users from './components/dashboardScreens/users.jsx';
+import Dashboard from './components/dashboardScreens/dashboard';
+import Orders from './components/dashboardScreens/orders';
+import Products from './components/dashboardScreens/products';
+import Customers from './components/dashboardScreens/customers';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

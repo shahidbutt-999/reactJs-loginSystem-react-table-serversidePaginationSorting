@@ -1,7 +1,5 @@
-import './App.css';
-import LoginScreen from "./Components/LoginScreen.js";
-import HomeScreen from './Components/HomeScreen.js';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import './app.css';
+import LoginScreen from './components/loginScreen.jsx';
 
 
 function App() {

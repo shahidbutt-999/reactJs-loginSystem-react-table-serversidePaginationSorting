@@ -1,5 +1,5 @@
 .usersNav {
-    margin-top: 10px;
+    margin-top: 1rem;
     overflow: auto;
     margin-bottom: 2rem;
     margin-top: 15rem;
@@ -12,4 +12,5 @@
     padding: 0.8rem 1.2rem;
     border-radius: 5px;
     border: none;
+    margin-left: 0.5rem;
 }

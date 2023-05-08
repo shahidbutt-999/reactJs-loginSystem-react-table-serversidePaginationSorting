@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
-// import {Link} from 'react-router-dom';
 
 function LoginForm({ nameP, passwordP, setNameP, setPasswordP }) {
     const navigate = useNavigate();
@@ -14,7 +13,6 @@ function LoginForm({ nameP, passwordP, setNameP, setPasswordP }) {
         // confirm from sessiong storage pending 
         e.preventDefault();
 
-        console.log("form submistion", nameP, passwordP);
         let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
         if (userInfo && nameP === userInfo.name && passwordP === userInfo.password) {
             setNameP("");

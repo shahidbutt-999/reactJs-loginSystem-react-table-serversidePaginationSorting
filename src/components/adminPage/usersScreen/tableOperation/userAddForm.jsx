@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import classes from "../../../assets/css/adminPage/usersScreen/userInputForm.module.css";
 
 function UserInputForm(props) {
     const fnameRef = useRef();
@@ -9,11 +8,11 @@ function UserInputForm(props) {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log(props.tableData);
+        let nextId = props.tableData.length ? props.tableData[props.tableData.length - 1].id + 1 : 1;
         props.setTableData([
             ...props.tableData,
             {
-                "id": Math.floor(Math.random() * 1000) + 5,
+                "id": nextId,
                 "first_name": fnameRef.current.value,
                 "last_name": lnameRef.current.value,
                 "email": emailRef.current.value,
@@ -28,7 +27,7 @@ function UserInputForm(props) {
     }
     return (
         <form
-            className={classes.userInputForm}
+            className="userInputForm"
             onSubmit={(e) => handleFormSubmit(e)}
         >
             <input
@@ -49,7 +48,7 @@ function UserInputForm(props) {
                 placeholder="Email"
                 required
             />
-            <div className={classes.genCon}>
+            <div className="genCon">
                 <input
                     ref={maleRef}
                     type="radio"

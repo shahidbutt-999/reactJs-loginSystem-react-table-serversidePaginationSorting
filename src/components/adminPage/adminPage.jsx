@@ -1,12 +1,10 @@
 import React from 'react';
-import './homeScreen.css';
 import { useState } from 'react';
-import dataObj from "../data/sidebar.json";
+import dataObj from "../../data/sidebar.json";
 import { Link, Outlet } from 'react-router-dom';
 
 
 const HomeScreen = () => {
-    // console.log(data);
     const [data, setData] = useState(dataObj);
     const handleLogout = () => {
         sessionStorage.clear();

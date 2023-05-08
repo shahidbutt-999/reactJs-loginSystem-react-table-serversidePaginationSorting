@@ -1,7 +1,4 @@
-import './app.css';
-import LoginScreen from './components/loginScreen.jsx';
-
-
+import LoginScreen from './components/loginPage/loginPage.jsx';
 function App() {
   return (
     <div className="App">

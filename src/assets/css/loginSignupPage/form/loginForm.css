@@ -40,7 +40,7 @@ input[type="submit"] {
     cursor: pointer;
 }
 
-.login-fom-con a {
+.login-fom-con p {
     align-self: flex-start;
     color: white;
     text-decoration: none;

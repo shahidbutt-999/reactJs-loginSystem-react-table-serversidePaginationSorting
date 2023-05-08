@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import LoginForm from './loginForm.jsx';
-import RegistrationForm from './registrationForm.jsx'
+import LoginForm from './forms/loginForm.jsx';
+import RegistrationForm from './forms/registrationForm.jsx'
 
 function LoginScreen() {
     const [formEnabler, setFromEnabler] = useState(0);

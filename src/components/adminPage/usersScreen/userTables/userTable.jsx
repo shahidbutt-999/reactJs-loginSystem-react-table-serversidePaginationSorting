@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTable, useSortBy, usePagination } from 'react-table'
 import { Columns } from "./userColumn";
-import classes from "../../../assets/css/adminPage/usersScreen/userTable.module.css";
 import { GiEruption, GiFallDown } from "react-icons/gi";
 
 function UserTable(props) {
@@ -28,8 +27,8 @@ function UserTable(props) {
 
     return (
         <>
-            <table className={classes.userTable} {...getTableProps()}>
-                <thead className={classes.userTableThead}>{
+            <table className="userTable" {...getTableProps()}>
+                <thead className="userTableThead">{
                     headerGroups.map((headerGroup) => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {

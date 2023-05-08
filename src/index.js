@@ -1,17 +1,15 @@
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './app';
-import HomeScreen from './components/homeScreen';
-import Users from './components/dashboardScreens/users.jsx';
-import Dashboard from './components/dashboardScreens/dashboard';
-import Orders from './components/dashboardScreens/orders';
-import Products from './components/dashboardScreens/products';
-import Customers from './components/dashboardScreens/customers';
-
+import HomeScreen from './components/adminPage/adminPage';
+import Users from './components/adminPage/usersScreen/users.jsx';
+import Dashboard from './components/adminPage/dashboardScreen/dashboard';
+import Orders from './components/adminPage/ordersScreen/orders';
+import Products from './components/adminPage/productsScreen/products';
+import Customers from './components/adminPage/customersScreen/customers';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

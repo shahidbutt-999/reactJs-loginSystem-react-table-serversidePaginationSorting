@@ -1,9 +1,9 @@
-import LoginScreen from './components/loginPage/loginPage.jsx';
+import LoginPage from './components/loginPage/loginPage.jsx';
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <LoginScreen />
+        <LoginPage />
       </header>
     </div>
   );

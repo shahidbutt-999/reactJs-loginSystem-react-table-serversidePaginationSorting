@@ -2,15 +2,23 @@
     margin-top: 1rem;
     overflow: auto;
     margin-bottom: 2rem;
-    margin-top: 15rem;
 }
 
 .usersNav button {
     float: right;
-    background-color: #0D6EFD;
+    background-color: #0f87f2;
     color: white;
     padding: 0.8rem 1.2rem;
     border-radius: 5px;
-    border: none;
+    border: 1px solid #0f87f2;
     margin-left: 0.5rem;
+    box-sizing: border-box;
+    transition-duration: 0.2s;
+}
+
+.usersNav button:hover {
+    background: transparent;
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+
 }

@@ -1,67 +1,81 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { loginFormConstants } from '../../../constants/loginPage/forms/loginFormConstants';
+import loginPageConstants from '../../../constants/loginPage/loginPageConstants';
+import { registrationFormConstants } from '../../../constants/loginPage/forms/registrationFormConstants';
 
-function LoginForm({ nameP, passwordP, setNameP, setPasswordP }) {
+function LoginForm() {
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
-    const handleNameChange = (e) => {
-        setNameP(e.target.value);
-    }
-    const handlePassowrdChange = (e) => {
-        setPasswordP(e.target.value);
-    }
-    const submitLogin = (e) => {
-        // confirm from sessiong storage pending 
-        e.preventDefault();
 
-        let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-        if (userInfo && nameP === userInfo.name && passwordP === userInfo.password) {
-            setNameP("");
-            setPasswordP("");
-            navigate("/homescreen");
+    // Handle form submission
+    const onSubmit = (data) => {
+        console.log(data.name, data.password);
+        let userInfo = JSON.parse(sessionStorage.getItem(loginPageConstants.USER_INFO_SS));
+        if (userInfo && data.name === userInfo.name && data.password === userInfo.password) {
+            navigate("/adminpage");
         }
         else {
             if (userInfo == null) {
-                alert("Please register login");
+                alert(loginFormConstants.REGISTER_USER_ERROR);
             }
             else {
-                alert("Wrong User name and password");
+                alert(loginFormConstants.WRONG_USER_ERROR);
             }
-
         }
+    };
 
-    }
     return (
         <>
-            <form onSubmit={(e) => submitLogin(e)} className="login-fom-con">
-                <h2 id="lf-title"> Login Form </h2>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="login-fom-con"
+            >
+                <h2 id="lf-title"> Hazel Soft </h2>
+                <label
+                    htmlFor={loginFormConstants.NAME}
+                >
+                    User Name*
+                </label>
                 <input
-                    onChange={(e) => handleNameChange(e)}
+                    id={loginFormConstants.NAME}
+                    placeholder={loginFormConstants.NAME}
+                    {...register('name', { required: true, maxLength: 30 })}
                     type="text"
-                    value={nameP}
-                    id="name"
-                    required
-                    placeholder="Name.."
                     autoComplete="off"
                 />
+                {errors.name && errors.name.type === "required" && (
+                    <span role="alert">This is required</span>
+                )}
+                {errors.name && errors.name.type === "maxLength" && (
+                    <span role="alert">Max length exceeded</span>
+                )}
+                <label
+                    htmlFor={registrationFormConstants.PASSWORD}
+                >
+                    Password*
+                </label>
                 <input
-                    onChange={(e) => handlePassowrdChange(e)}
+                    id={loginFormConstants.PASSWORD}
+                    placeholder={loginFormConstants.PASSWORD}
+                    {...register('password', { required: true, maxLength: 20 })}
                     type="password"
-                    value={passwordP}
-                    id="password"
-                    required
-                    placeholder="Password"
                 />
+                {errors.password && errors.password.type === "required" && (
+                    <span role="alert">This is required</span>
+                )}
+                {errors.password && errors.password.type === "maxLength" && (
+                    <span role="alert">Max length exceeded</span>
+                )}
                 <input
+                    name={loginFormConstants.SUBMIT_LOGIN}
+                    id={loginFormConstants.SUBMIT_LOGIN}
+                    value={loginFormConstants.SUBMIT_LOGIN}
                     type="submit"
-                    name="submit"
-                    id="submit"
-                    value={"Log In"}
                 />
                 <p> Don't have an account ?</p>
             </form>
-
-
-
         </>
     )
 }

@@ -6,14 +6,17 @@
     flex-direction: column;
     padding-bottom: 1rem;
 
+
 }
 
 #lf-title {
-    border-bottom: 1px solid white;
+    border-left: 3.5px solid #70bbfd;
     font-size: 1em;
-    padding-bottom: 1em;
     width: 100%;
-    margin-bottom: 0px;
+    margin-top: 1rem;
+    color: #74bbfa;
+    text-align: left;
+    padding: 2rem 0rem 2rem 1rem;
 }
 
 input {
@@ -21,28 +24,30 @@ input {
     box-sizing: border-box;
     padding: 1rem 1.5rem;
     width: 100%;
-    border: 1px solid white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
     background: transparent;
-    color: white;
+    color: #787882;
     font-size: 0.6em !important;
-
-
 }
 
 input[type="text"]::placeholder,
 input[type="password"]::placeholder {
-    color: white;
+    color: #787882;
     opacity: 0.7;
 }
 
 input[type="submit"] {
     transition: 0.2s;
     cursor: pointer;
+    background-color: #74bbfa;
+    color: white;
 }
 
-.login-fom-con p {
+/* Login/SignUP form msg "already have account?" */
+.login-fom-con p,
+.login-fom-con label {
     align-self: flex-start;
-    color: white;
+    color: #787882;
     text-decoration: none;
     font-size: 1.2rem;
     pointer-events: none;
@@ -50,9 +55,9 @@ input[type="submit"] {
 
 input[type="button"] {
     padding: 1rem 1.5rem;
-    color: white;
+    color: #787882;
     width: fit-content;
-    border: 1px solid white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 3px;
     cursor: pointer;
     transition-duration: 0.2s;
@@ -61,21 +66,40 @@ input[type="button"] {
 
 input[type="button"] {
     margin-right: 0.5em;
-    background-color: white;
-    color: black;
+    background-color: #74bbfa;
+    color: white;
 }
 
 input[type="button"]:hover {
     background: transparent;
-    color: white;
-    border: 1px solid white;
+    color: #787882;
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 input[type="submit"]:hover {
-    background-color: white;
-    color: black;
+    background: transparent;
+    color: #787882;
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 input:focus {
-    border: none;
+    outline: none;
+    border-color: #0f87f2;
+}
+
+/* login | registration form input's space */
+.login-fom-con input {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+
+/* Input Form Error Message Design */
+
+.login-fom-con input+span {
+    align-self: flex-start;
+    color: #f25050;
+    text-decoration: none;
+    font-size: 1.2rem;
+    pointer-events: none;
 }

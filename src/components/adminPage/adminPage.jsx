@@ -1,55 +1,84 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import dataObj from "../../data/sidebar.json";
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { GiHamburgerMenu } from "react-icons/gi";
 
 
 const HomeScreen = () => {
     const [data, setData] = useState(dataObj);
+    const [collapse, setCollapse] = useState(false);
+    const navRef = useRef();
+    const navigate = useNavigate();
+    // Logout | Clearing Session Storage, just so will have to re-register before login
     const handleLogout = () => {
         sessionStorage.clear();
     }
-    const sidbarActive = (element, id) => {
+
+
+
+    // Sidebar Active Btn
+    const sidbarActive = (id) => {
         setData(
             data.map((element) => {
                 if (element.id === id) {
                     element.active = true;
-                    return element;
                 }
-                element.active = false;
+                else {
+                    element.active = false;
+                }
                 return element;
             })
         );
     }
+
+
     return (
         <section id='home-screen' className='row'>
 
-            <div id='sidebar' className="col-2 d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+            <div id='sidebar' className="col-12 col-md-2 d-flex flex-column flex-shrink-0 p-3 bg-dark">
 
-                <Link
-                    to={"/"}
-                    onClick={handleLogout}
-                    className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-                >
-                    Log Out
-                </Link>
+                <div className='d-flex justify-content-between align-items-center'>
+                    <Link
+                        className="text-decoration-none text-white"
+                    >
+                        HazelSoft
+                    </Link>
+
+                    <GiHamburgerMenu
+                        onClick={() => setCollapse(!collapse)}
+                        className='GiHamburgerMenu'
+                    />
+                </div>
                 <hr />
-                <ul className="nav nav-pills flex-column mb-auto">
+                <ul
+                    ref={navRef}
+                    className={collapse ?
+                        'nav nav-pills flex-column mb-auto' :
+                        'nav nav-pills flex-column mb-auto hiding-navbar'
+                    }
+                >
                     {data.map((e) => (
                         <li className='nav-item' key={e.id}>
                             <Link
-                                to={e.id !== 0 ? "/homescreen/" + e.id : "/homescreen"}
-                                onClick={(innerElm) => sidbarActive(innerElm, e.id)}
-                                className={e.active === true ? 'nav-link active text-white' : 'nav-link text-white'}>
+                                to={e.name !== "Users" ? "/adminpage/" + e.name : "/adminpage"}
+                                onClick={() => sidbarActive(e.id)}
+                                className={e.active ? 'nav-link active text-white' : 'nav-link text-white'}>
                                 {e.name}
                             </Link>
                         </li>
                     ))}
                 </ul>
                 <hr />
+                <Link
+                    id='logut-link'
+                    to={"/"}
+                    onClick={handleLogout}
+                    className="text-decoration-none text-white"
+                >
+                    Log Out
+                </Link>
 
             </div>
-
             <Outlet />
 
         </section>

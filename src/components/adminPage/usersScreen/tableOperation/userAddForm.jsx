@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { BiXCircle } from "react-icons/bi";
 
 function UserInputForm(props) {
     const fnameRef = useRef();
@@ -10,15 +11,14 @@ function UserInputForm(props) {
         e.preventDefault();
         let nextId = props.tableData.length ? props.tableData[props.tableData.length - 1].id + 1 : 1;
         props.setTableData([
-            ...props.tableData,
             {
                 "id": nextId,
                 "first_name": fnameRef.current.value,
                 "last_name": lnameRef.current.value,
                 "email": emailRef.current.value,
                 "gender": maleRef.current.checked ? "Male" : "Female",
-            }
-
+            },
+            ...props.tableData
         ]);
 
         props.handleInputFormChange();
@@ -30,6 +30,11 @@ function UserInputForm(props) {
             className="userInputForm"
             onSubmit={(e) => handleFormSubmit(e)}
         >
+            <BiXCircle
+                className='close-model'
+                onClick={props.handleInputFormChange}
+            />
+            <h1>Add User Info:</h1>
             <input
                 ref={fnameRef}
                 type="text"

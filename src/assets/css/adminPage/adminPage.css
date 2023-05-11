@@ -1,13 +1,42 @@
 #home-screen {
-    background-color: #282c34;
+    background-color: #f2f4f7;
     min-height: 100vh;
     margin: 0px;
     padding: 0px;
-    color: white;
+    color: #787882;
     font-size: 1.6rem;
     box-sizing: border-box;
 }
 
 #home-screen h1 {
     margin: 0px;
+    color: black;
+}
+
+#sidebar div:first-child Link {
+    width: fit-content;
+}
+
+
+
+.GiHamburgerMenu {
+    color: white;
+    cursor: pointer;
+}
+
+#logut-link {
+    color: #787882;
+    width: fit-content;
+
+}
+
+.hiding-navbar {
+    height: 0px;
+    overflow: hidden;
+
+    opacity: 0;
+}
+
+ul {
+    transition: 0.3s;
 }

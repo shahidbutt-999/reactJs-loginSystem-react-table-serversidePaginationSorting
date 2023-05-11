@@ -1,0 +1,12 @@
+.global-filter-con {
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.global-filter-con input {
+    width: fit-content;
+    margin-left: 1rem;
+}

@@ -6,7 +6,7 @@ function UserInputModal({ handleInputFormChange, tableData, setTableData }) {
         <>
             <div
                 className="backDrop"
-                onClick={handleInputFormChange}
+            // onClick={handleInputFormChange}
             >
             </div>
             <UserInputForm

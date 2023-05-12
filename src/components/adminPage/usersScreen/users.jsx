@@ -4,7 +4,7 @@ import { BiTrash } from "react-icons/bi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserInputModal from './tableOperation/userAddModal';
-import DummyData from "../../../data/userTableData.json";
+import DummyData from "../../../data/UserTableData.json";
 
 function Users() {
     const [tableData, setTableData] = useState(DummyData);

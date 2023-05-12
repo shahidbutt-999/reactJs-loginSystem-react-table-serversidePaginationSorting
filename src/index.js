@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './app';
+import App from './App';
 import AdminPage from './components/adminPage/adminPage';
 import Users from './components/adminPage/usersScreen/users.jsx';
 import Dashboard from './components/adminPage/dashboardScreen/dashboard';

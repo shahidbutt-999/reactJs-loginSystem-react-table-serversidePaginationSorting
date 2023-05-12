@@ -3,18 +3,21 @@ import { useForm } from "react-hook-form";
 import loginPageConstants from '../../../constants/loginPage/loginPageConstants';
 import { registrationFormConstants } from '../../../constants/loginPage/forms/registrationFormConstants';
 
-function RegistrationForm({ setFromEnabler }) {
+function RegistrationForm({ setFromEnabler, showToast }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
+
         console.log(data);
         const userData = JSON.stringify({
             "name": data.name,
             "password": data.password
         })
         sessionStorage.setItem(loginPageConstants.USER_INFO_SS, userData);
-        alert(registrationFormConstants.USER_REGISTERED_MSG);
         setFromEnabler(false);
+        showToast(registrationFormConstants.USER_REGISTERED_MSG);
+
     };
+
 
     return (
         <form

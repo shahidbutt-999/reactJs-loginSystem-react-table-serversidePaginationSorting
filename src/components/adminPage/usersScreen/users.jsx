@@ -1,13 +1,28 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import Table from '../../shared/table/table';
 import { BiTrash } from "react-icons/bi";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import UserInputModal from './tableOperation/userAddModal';
 import DummyData from "../../../data/userTableData.json";
 
 function Users() {
     const [tableData, setTableData] = useState(DummyData);
     const [inputFormDisplay, setInputFormDisplay] = useState(false);
-    const handleInputFormChange = () => {
+    function handleInputFormChange(elm = false) {
+        if (elm) {
+            // console.log(elm);
+            toast.success('User is Added!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: "",
+                theme: "light",
+            });
+        }
         setInputFormDisplay(!inputFormDisplay);
     }
     const [previousPageNum, setPreviousPageNum] = useState(0);
@@ -74,9 +89,9 @@ function Users() {
 
 
     return (
-        <div className='col-11 col-md-10 mx-auto'>
+        <div className='col-12 col-md-10 mx-auto'>
             <h1 className='mt-2'>Users</h1>
-            <div className="usersNav mt-md-5 px-5">
+            <div className="usersNav mt-md-5 px-lg-5">
                 <button onClick={() => { setInputFormDisplay(!inputFormDisplay) }}>Add User</button>
 
             </div>
@@ -93,11 +108,26 @@ function Users() {
 
 
             <Table
-                className="px-5"
+                className="px-lg-5"
                 tableData={tableData}
                 Columns={Columns}
                 previousPageNum={previousPageNum}
             />
+            {/* Toast on Adding new user */}
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+            {/* Same as */}
+            <ToastContainer />
 
         </div>
     )

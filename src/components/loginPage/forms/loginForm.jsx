@@ -5,7 +5,7 @@ import { loginFormConstants } from '../../../constants/loginPage/forms/loginForm
 import loginPageConstants from '../../../constants/loginPage/loginPageConstants';
 import { registrationFormConstants } from '../../../constants/loginPage/forms/registrationFormConstants';
 
-function LoginForm() {
+function LoginForm({ showToast }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
@@ -18,10 +18,10 @@ function LoginForm() {
         }
         else {
             if (userInfo == null) {
-                alert(loginFormConstants.REGISTER_USER_ERROR);
+                showToast(loginFormConstants.REGISTER_USER_ERROR);
             }
             else {
-                alert(loginFormConstants.WRONG_USER_ERROR);
+                showToast(loginFormConstants.WRONG_USER_ERROR);
             }
         }
     };

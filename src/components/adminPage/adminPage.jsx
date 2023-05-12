@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import dataObj from "../../data/sidebar.json";
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi";
 
 
@@ -8,7 +8,6 @@ const HomeScreen = () => {
     const [data, setData] = useState(dataObj);
     const [collapse, setCollapse] = useState(false);
     const navRef = useRef();
-    const navigate = useNavigate();
     // Logout | Clearing Session Storage, just so will have to re-register before login
     const handleLogout = () => {
         sessionStorage.clear();

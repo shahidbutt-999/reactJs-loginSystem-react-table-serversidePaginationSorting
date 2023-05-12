@@ -21,8 +21,9 @@ function UserInputForm(props) {
             ...props.tableData
         ]);
 
-        props.handleInputFormChange();
-        alert("User is added");
+        // sending false as argument to know that user is added
+        props.handleInputFormChange(true);
+        // alert("User is added");
 
     }
     return (
@@ -32,7 +33,7 @@ function UserInputForm(props) {
         >
             <BiXCircle
                 className='close-model'
-                onClick={props.handleInputFormChange}
+                onClick={() => props.handleInputFormChange(false)}
             />
             <h1>Add User Info:</h1>
             <input

@@ -17,6 +17,7 @@
     color: white;
     position: sticky;
     top: 0;
+    z-index: 999;
 }
 
 
@@ -31,7 +32,7 @@ th {
 }
 
 th:nth-child(4) {
-    width: 40rem;
+    width: 35vmin;
 }
 
 tr:nth-child(even) {

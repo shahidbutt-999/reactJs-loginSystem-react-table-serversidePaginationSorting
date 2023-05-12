@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table'
 import { BiDownArrowAlt, BiUpArrowAlt, BiTransfer } from "react-icons/bi";
 import GlobalFilter from './globalFilter';

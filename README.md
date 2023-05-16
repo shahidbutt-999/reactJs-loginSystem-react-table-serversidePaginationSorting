@@ -1,7 +1,7 @@
-## Developed by Shahid Butt, ReactJS - Login Dashboard
+### Developed by Shahid Butt, ReactJS - Login Dashboard
 
 
-### Repo Details
+#### Repo Details
 The project is of a ReactJs Login/SignUp dashboard/
 For signUp i am using Session Storage and upon logout, Session storage gets clear/
 Following Functionality is in the project.

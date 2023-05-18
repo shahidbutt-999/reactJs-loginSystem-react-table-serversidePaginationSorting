@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from "../../shared/table/table";
+import Table from "../../shared/clientTable/table";
 import tableData from "../../../data/DashboardData.json"
 import { Columns } from "../../../constants/adminPage/dashboardScreen/dashboardColumn";
 

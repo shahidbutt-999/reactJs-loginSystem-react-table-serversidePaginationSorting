@@ -1,10 +1,16 @@
 import React, { useMemo } from 'react';
+import { connect } from 'react-redux';
 import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table'
 import { BiDownArrowAlt, BiUpArrowAlt, BiTransfer } from "react-icons/bi";
 import GlobalFilter from './globalFilter';
+import * as actionTypes from "../../../store/actions/actionTypes";
 
 function Table(props) {
-    const data = useMemo(() => props.tableData, [props.tableData]);
+    // console.log(props.userData, "table is rendered")
+    const data = useMemo(() => {
+        return props.userData;
+    }, [props.userData]);
+
 
     const columns = props.Columns;
     const {
@@ -26,7 +32,7 @@ function Table(props) {
     } = useTable({
         columns: columns,
         data: data,
-        initialState: { pageIndex: props.previousPageNum }
+        initialState: { pageIndex: props.pageNumber }
     }, useGlobalFilter, useSortBy, usePagination)
     const { pageIndex, pageSize, globalFilter } = state;
 
@@ -154,4 +160,22 @@ function Table(props) {
     )
 }
 
-export default Table
+
+const mapStateToProps = (state) => {
+
+    return {
+        userData: state.auth.userData,
+        pageNumber: state.auth.pageNumber
+    };
+
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // dispatching actions returned by action creators
+        onDeleteUser: () => dispatch({ type: actionTypes.DELETE_USER }),
+        onAddUser: () => dispatch({ type: actionTypes.ADD_USER }),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
+// export default Table;

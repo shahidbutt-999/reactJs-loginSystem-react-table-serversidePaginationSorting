@@ -4,7 +4,9 @@ import { Link, Outlet } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi";
 
 
+
 const HomeScreen = () => {
+
     const [data, setData] = useState(dataObj);
     const [collapse, setCollapse] = useState(false);
     const navRef = useRef();

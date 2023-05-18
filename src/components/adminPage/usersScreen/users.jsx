@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import Table from '../../shared/table/table';
+import { connect } from 'react-redux';
+import Table from '../../shared/clientTable/table';
 import { BiTrash } from "react-icons/bi";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserInputModal from './tableOperation/userAddModal';
-import DummyData from "../../../data/UserTableData.json";
+import * as actionTypes from "../../../store/actions/actionTypes";
 
-function Users() {
-    const [tableData, setTableData] = useState(DummyData);
+function Users(props) {
     const [inputFormDisplay, setInputFormDisplay] = useState(false);
     function handleInputFormChange(elm = false) {
         if (elm) {
-            // console.log(elm);
             toast.success('User is Added!', {
                 position: "top-right",
                 autoClose: 5000,
@@ -25,7 +24,7 @@ function Users() {
         }
         setInputFormDisplay(!inputFormDisplay);
     }
-    const [previousPageNum, setPreviousPageNum] = useState(0);
+
 
 
     // defining table columns
@@ -67,14 +66,11 @@ function Users() {
                         color: "blue",
                         textDecoration: "none"
                     }}
-                    onClick={() => {
+                    onClick={(e) => {
                         if (window.confirm("Are You Sure ?")) {
-                            tableData.splice(tableProps.row.index, 1);
-                            setPreviousPageNum(tableProps.state.pageIndex);
-                            setTableData([...tableData]);
-                            // tableProps.gotoPage(previousPageNum);
+                            // console.log(tableProps.row.original.id, tableProps.state.pageIndex);
+                            props.onDeleteUser(tableProps.row.original.id, tableProps.state.pageIndex);
 
-                            console.log(previousPageNum);
                         }
 
                     }}
@@ -92,7 +88,7 @@ function Users() {
         <div className='col-12 col-md-10 mx-auto'>
             <h1 className='mt-2'>Users</h1>
             <div className="usersNav mt-md-5 px-lg-5">
-                <button onClick={() => { setInputFormDisplay(!inputFormDisplay) }}>Add User</button>
+                <button onClick={() => { setInputFormDisplay(!inputFormDisplay) }}>Add New</button>
 
             </div>
 
@@ -101,17 +97,14 @@ function Users() {
             {inputFormDisplay &&
                 <UserInputModal
                     handleInputFormChange={handleInputFormChange}
-                    tableData={tableData}
-                    setTableData={setTableData}
                 />
             }
 
 
             <Table
                 className="px-lg-5"
-                tableData={tableData}
                 Columns={Columns}
-                previousPageNum={previousPageNum}
+
             />
             {/* Toast on Adding new user */}
             <ToastContainer
@@ -133,4 +126,22 @@ function Users() {
     )
 }
 
-export default Users
+
+const mapStateToProps = (state) => {
+
+    return {
+        userData: state.auth.userData,
+        pageNumber: state.auth.pageNumber
+
+    };
+
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // dispatching actions returned by action creators
+        onDeleteUser: (userId, pageNumber) => dispatch({ type: actionTypes.DELETE_USER, userId: userId, pageNumber: pageNumber }),
+        onAddUser: () => dispatch({ type: actionTypes.ADD_USER }),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Users);

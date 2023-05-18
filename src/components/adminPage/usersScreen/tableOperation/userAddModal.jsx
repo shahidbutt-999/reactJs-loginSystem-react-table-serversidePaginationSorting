@@ -1,18 +1,15 @@
 import React from 'react'
 import UserInputForm from './userAddForm';
 
-function UserInputModal({ handleInputFormChange, tableData, setTableData }) {
+function UserInputModal({ handleInputFormChange }) {
     return (
         <>
             <div
                 className="backDrop"
-            // onClick={handleInputFormChange}
             >
             </div>
             <UserInputForm
                 handleInputFormChange={handleInputFormChange}
-                tableData={tableData}
-                setTableData={setTableData}
             />
 
         </>

@@ -85,7 +85,7 @@ function UserInputForm(props) {
 const mapStateToProps = (state) => {
 
     return {
-        userData: state.auth.userData
+        userData: state.userTableRedClientSide.userData
     };
 
 }

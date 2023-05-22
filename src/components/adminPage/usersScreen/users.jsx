@@ -8,6 +8,7 @@ import UserInputModal from './tableOperation/userAddModal';
 import * as actionTypes from "../../../store/actions/actionTypes";
 
 function Users(props) {
+    console.log("i am rendering | Users");
     const [inputFormDisplay, setInputFormDisplay] = useState(false);
     function handleInputFormChange(elm = false) {
         if (elm) {
@@ -130,8 +131,8 @@ function Users(props) {
 const mapStateToProps = (state) => {
 
     return {
-        userData: state.auth.userData,
-        pageNumber: state.auth.pageNumber
+        userData: state.userTableRedClientSide.userData,
+        pageNumber: state.userTableRedClientSide.pageNumber
 
     };
 

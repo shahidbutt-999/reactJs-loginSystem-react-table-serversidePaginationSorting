@@ -1,40 +1,39 @@
-import React, { useMemo } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table'
 import { BiDownArrowAlt, BiUpArrowAlt, BiTransfer } from "react-icons/bi";
 import GlobalFilter from './globalFilter';
-import * as actionTypes from "../../../store/actions/actionTypes";
+// css of user table is used
 
 function Table(props) {
-    // console.log(props.userData, "table is rendered")
-    const data = useMemo(() => {
-        return props.userData;
-    }, [props.userData]);
-
-
+    // console.log(props.tableData, "table state from prop sis rendered");
+    const [canNextPage, setCanNextPage] = useState(true);
+    const [canPrevPage, setCanPrevPage] = useState(false);
     const columns = props.Columns;
+    const data = props.tableData;
+    const total = props.total;
+    const currentPage = props.currentPage;
+    const numberOfPages = props.numberOfPages;
+    const pageSize = props.pageSize;
+    const itemCountInCurrentPage = props.itemCountInCurrentPage;
+    // destructuring set pagination parameter
+    const setPageSize = props.setPageSize;
+    const setCurrentPage = props.setCurrentPage;
+    console.log("Table Component is rerendered with these:\nTotal = ", total, "  currentPage = ", currentPage, " numberOfPages = ", numberOfPages, " pageSize = ", pageSize, " itemCountCurrentPage = ", itemCountInCurrentPage);
+
     const {
         getTableProps,
         getTableBodyProps,
         headerGroups,
         page,
-        nextPage,
-        previousPage,
-        canNextPage,
-        canPreviousPage,
         pageOptions,
-        gotoPage,
-        pageCount,
-        setPageSize,
         state,
         setGlobalFilter,
         prepareRow
     } = useTable({
         columns: columns,
-        data: data,
-        initialState: { pageIndex: props.pageNumber }
+        data: data
     }, useGlobalFilter, useSortBy, usePagination)
-    const { pageIndex, pageSize, globalFilter } = state;
+    const { globalFilter } = state;
 
     return (
         <div className={props.className}>
@@ -43,27 +42,35 @@ function Table(props) {
                 globalFilter={globalFilter}
             />
             <div className='overflow-auto table-con'>
-                <table className="table user-table col-10" {...getTableProps()}>
+                <table className="table dashboard-table col-10 mx-auto" {...getTableProps()}>
                     <thead className="table-thead">{
                         headerGroups.map((headerGroup) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 {
-                                    headerGroup.headers.map((column) => (
-                                        <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                            {column.render("Header")}
-                                            <span>
-                                                {
-                                                    column.isSorted ?
+                                    headerGroup.headers.map((column, index) => (
+                                        // index help will skip the checkbox icon from sorting functionality
+                                        index !== 0 ? (
+                                            <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                                {column.render("Header")}
+
+                                                <span>
+                                                    {column.isSorted ?
                                                         (column.isSortedDesc ?
                                                             <BiUpArrowAlt /> :
                                                             <BiDownArrowAlt />) :
-                                                        <BiTransfer
+                                                        (<BiTransfer
                                                             style={{ rotate: "90deg" }}
-                                                        />
-                                                }
-                                            </span>
+                                                        />)
+                                                    }
+                                                </span>
 
-                                        </th>
+
+                                            </th>
+                                        ) :
+                                            <th {...column.getHeaderProps()}>
+                                                {column.render("Header")}
+                                            </th>
+
                                     ))
                                 }
                             </tr>)
@@ -95,25 +102,10 @@ function Table(props) {
                 </table>
             </div>
             <div className='table-pagination'>
-                <strong>Page {Number(pageIndex) + 1} of {pageOptions.length} | Go To Page: </strong>
-                <span>
-                    <input
-                        id='pagination-input'
-                        type="number"
-                        defaultValue={Number(pageIndex) + 1}
-                        onChange={(e) => {
-                            const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0
-                            gotoPage(pageNumber);
-                        }
-                        }
-                    />
-                </span>
-                <button
-                    onClick={() => gotoPage(0)}
-                    disabled={!canPreviousPage}
-                >
-                    {"<<"}
-                </button>
+                {/* <strong>Showing {Number(currentPage) + 1} of {pageOptions.length} | Go To Page: </strong> */}
+                <strong>Showing {eval(((currentPage - 1) * (pageSize)) + 1)} to {eval((currentPage - 1) * pageSize + itemCountInCurrentPage)} of {total}</strong>
+
+
                 <select
                     value={pageSize}
                     onChange={(e) => {
@@ -121,14 +113,14 @@ function Table(props) {
                     }}
                 >
                     {
-                        [10, 25, 50].map((pageSize) => {
+                        [5, 15, 45, 100, 150].map((elm) => {
 
                             return (
                                 <option
-                                    key={pageSize}
-                                    value={pageSize}
+                                    key={elm}
+                                    value={elm}
                                 >
-                                    Show {pageSize}
+                                    Show {elm}
                                 </option>
                             )
                         }
@@ -137,19 +129,34 @@ function Table(props) {
 
                 </select>
                 <button
-                    onClick={() => { previousPage(); }}
-                    disabled={!canPreviousPage}
+                    onClick={() => {
+                        setCurrentPage(1)
+                        setCanPrevPage();
+                    }}
+                    disabled={!canPrevPage}
+                >
+                    {"<<"}
+                </button>
+                <button
+                    onClick={() => {
+                        setCurrentPage(currentPage - 1)
+                        setCanPrevPage();
+                    }}
+                    disabled={!canPrevPage}
                 >
                     Previous
                 </button>
                 <button
-                    onClick={() => { nextPage(); }}
+                    onClick={() => {
+                        setCurrentPage(currentPage + 1)
+                        setCanPrevPage();
+                    }}
                     disabled={!canNextPage}
                 >
                     Next
                 </button>
                 <button
-                    onClick={() => gotoPage(pageCount - 1)}
+                    onClick={() => setCurrentPage(total > 10 ? Math.ceil(eval(total / pageSize)) : 1)}
                     disabled={!canNextPage}
                 >
                     {">>"}
@@ -161,21 +168,7 @@ function Table(props) {
 }
 
 
-const mapStateToProps = (state) => {
 
-    return {
-        userData: state.userTableRedClientSide.userData,
-        pageNumber: state.userTableRedClientSide.pageNumber
-    };
 
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        // dispatching actions returned by action creators
-        onDeleteUser: () => dispatch({ type: actionTypes.DELETE_USER }),
-        onAddUser: () => dispatch({ type: actionTypes.ADD_USER }),
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Table);
-// export default Table;
+// export default connect(mapStateToProps)(Table);
+export default Table;

@@ -1,9 +1,13 @@
 import { combineReducers } from 'redux';
-import authenticate from './authenticate.js';
+import authorized from './authorized';
+import userTableRedClientSide from './userTableRedClientSide';
+import userTableRedUnixFor from './userTableRedUnixFor.js';
 
 
 const rootReducer = combineReducers({
-    auth: authenticate
+    userTableRedClientSide: userTableRedClientSide,
+    isAuthorize: authorized,
+    userTableRedUnixFor: userTableRedUnixFor,
 });
 
 export default rootReducer;

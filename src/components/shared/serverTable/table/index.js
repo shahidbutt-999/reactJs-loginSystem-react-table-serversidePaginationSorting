@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import { useTable } from "react-table";
 import Loader from "../loader";
-import styles from './styles.module.css'
 
 const AppTable = ({ columns, data, isLoading, manualPagination = false }) => {
     const columnData = useMemo(() => columns, [columns]);

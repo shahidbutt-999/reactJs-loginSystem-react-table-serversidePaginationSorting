@@ -1,3 +1,11 @@
 export const ADD_USER = "ADD_USER";
 export const DELETE_USER = "DELETE_USER";
 export const SET_PAGE = "SET_PAGE";
+export const LOG_IN = "LOG_IN";
+export const LOG_OUT = "LOG_OUT";
+export const SET_TABLE_DATA = "SET_TABLE_DATA";
+export const SET_PAGESIZE = "SET_PAGESIZE";
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+export const SET_TOTAL = "SET_TOTAL";
+export const SET_NUMBER_OF_PAGES = "SET_NUMBER_OF_PAGES";
+export const SET_ITEM_COUNT_IN_CURRENT_PAGE = "SET_ITEM_COUNT_IN_CURRENT_PAGE";

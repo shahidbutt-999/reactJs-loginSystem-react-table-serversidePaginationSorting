@@ -9,6 +9,7 @@
     border: none;
     color: white;
     table-layout: fixed;
+    /* transition-duration: 0.5s; */
 }
 
 .table-thead {
@@ -29,19 +30,25 @@ th {
     vertical-align: middle;
     padding: 8px;
     word-wrap: break-word;
+    font-size: 1.3rem;
+
 }
 
-th:nth-child(4) {
-    width: 35vmin;
-}
+
 
 tr:nth-child(even) {
-    background-color: #0F87F2;
-    color: white;
+    background-color: #FFFFFF;
+}
+
+tr,
+td {
+    font-size: 1rem;
+    transition-duration: 0.3s;
+    transition-property: background-color;
 }
 
 tr:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .table-pagination {
@@ -100,4 +107,16 @@ tr:hover {
 .table-pagination select:focus {
     border: none;
     outline: none;
+}
+
+/* client side table */
+.user-table th:nth-child(4) {
+    width: 35vmin;
+}
+
+
+/* unix for table dashboard table */
+.dashboard-table th {
+    font-size: 1.0rem;
+
 }

@@ -1,18 +1,24 @@
 import React, { useRef, useState } from 'react';
+import { connect } from 'react-redux';
+import * as actionTypes from "../../store/actions/actionTypes";
 import dataObj from "../../data/sidebar.json";
 import { Link, Outlet } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi";
 
 
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
 
     const [data, setData] = useState(dataObj);
     const [collapse, setCollapse] = useState(false);
     const navRef = useRef();
-    // Logout | Clearing Session Storage, just so will have to re-register before login
+    // Logout | Clearing Local Storage, just so will have to re-register before login
+    // console.log(props.isLoggedIn, "in adminpage component");
+    console.log("admin page is re rendered");
+
     const handleLogout = () => {
-        sessionStorage.clear();
+        window.localStorage.clear();
+        props.onLogOut();
     }
 
 
@@ -86,4 +92,17 @@ const HomeScreen = () => {
     )
 }
 
-export default HomeScreen
+const mapStateToProps = (state) => {
+
+    return {
+        isLoggedIn: state.isAuthorize.isLoggedIn,
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // dispatching actions returned by action creators
+        onLogOut: () => dispatch({ type: actionTypes.LOG_OUT }),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

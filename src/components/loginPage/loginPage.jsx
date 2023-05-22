@@ -1,17 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import * as actionTypes from "../../store/actions/actionTypes";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoginForm from './forms/loginForm.jsx';
 import RegistrationForm from './forms/registrationForm.jsx';
 import loginPageConstants from '../../constants/loginPage/loginPageConstants.js';
+import { TOKEN } from "../../constants/shared/loginTokenConstants";
 
 
-function LoginScreen() {
-
+function LoginScreen(props) {
+    const nevigate = useNavigate();
     const [formEnabler, setFromEnabler] = useState(false);
     // deleting session storage just so user cannot access this once logged in and if he does, will have to relogin
     useEffect(() => {
-        sessionStorage.clear();
+        // console.log(TOKEN);
+        const check = localStorage.getItem(TOKEN);
+        console.log("check", check, props.isLoggedIn);
+        if (check && props.isLoggedIn) {
+            nevigate('/adminpage');
+        }
+        else {
+            localStorage.clear();
+            props.onLogOut();
+        }
+
+
     }, [])
 
     // to show toast on screen
@@ -91,4 +106,15 @@ function LoginScreen() {
         </div>
     )
 }
-export default LoginScreen
+const mapStateToProps = (state) => {
+    return { isLoggedIn: state.isAuthorize.isLoggedIn }
+
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // dispatching actions returned by action creators
+        onLogOut: () => dispatch({ type: actionTypes.LOG_OUT }),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

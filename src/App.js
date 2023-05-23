@@ -5,7 +5,7 @@ import * as actionTypes from "./store/actions/actionTypes.js";
 // Components Export
 import AdminPage from './components/adminPage/adminPage';
 import Dashboard from './components/adminPage/dashboardScreen/dashboard.jsx';
-import Users from './components/adminPage/UsersScreen/users.jsx';
+import Users from './components/adminPage/usersScreen/users.jsx';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 
 

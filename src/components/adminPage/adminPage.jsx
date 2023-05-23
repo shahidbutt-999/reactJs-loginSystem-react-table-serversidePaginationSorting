@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import * as actionTypes from "../../store/actions/actionTypes";
-import dataObj from "../../data/sidebar.json";
+import dataObj from "../../Data/Sidebar.json";
 import { Link, Outlet } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi";
 

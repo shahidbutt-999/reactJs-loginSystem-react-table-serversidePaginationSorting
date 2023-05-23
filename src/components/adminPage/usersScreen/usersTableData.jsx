@@ -2,6 +2,29 @@ import axios from "axios";
 import React from "react";
 import { TOKEN } from "../../../constants/shared/loginTokenConstants";
 
+// fetch function to get table data
+export const fetchUsersData = async (pageSize, currentPage, orderBy = "") => {
+    console.log("backend call to get user data and the call will be ", pageSize, currentPage);
+    const token = window.localStorage.getItem(TOKEN);
+    try {
+        const res = await axios({
+            method: 'get',
+            // url: `https://unixforapi.hazelsoft.net/api/v1/user/users?PageSize=${pageSize}&PageNumber=${currentPage}`,
+            url: `https://unixforapi.hazelsoft.net/api/v1/user/users?PageSize=${pageSize}&PageNumber=${currentPage}&OrderBy=${orderBy}`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+
+        // console.log(res.data.payload, "from fetch functions");
+        return res;
+    }
+    catch (err) {
+
+        return err
+    }
+}
+
 // Defining Table Header and Binding Data
 export const Columns = [
     {
@@ -93,24 +116,3 @@ export const Columns = [
     },
 ];
 
-// fetch function to get table data
-export const fetchDashboardData = async (pageSize, currentPage) => {
-    console.log("backend call to get user data and the call will be ", pageSize, currentPage);
-    const token = window.localStorage.getItem(TOKEN);
-    try {
-        const res = await axios({
-            method: 'get',
-            url: `https://unixforapi.hazelsoft.net/api/v1/user/users?PageSize=${pageSize}&PageNumber=${currentPage}`,
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        });
-
-        // console.log(res.data.payload, "from fetch functions");
-        return res;
-    }
-    catch (err) {
-
-        return err
-    }
-}

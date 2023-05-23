@@ -1,18 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import Table from '../../shared/clientTable/table';
-import { BiTrash } from "react-icons/bi";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import UserInputModal from './tableOperation/userAddModal';
 import * as actionTypes from "../../../store/actions/actionTypes";
+import Table from "../../shared/unixForTable/table";
+import * as tableProps from "./usersTableData";
+import { ToastContainer, toast } from 'react-toastify';
+
+
 
 function Users(props) {
-    console.log("i am rendering | Users");
-    const [inputFormDisplay, setInputFormDisplay] = useState(false);
-    function handleInputFormChange(elm = false) {
-        if (elm) {
-            toast.success('User is Added!', {
+    console.log("users rendering");
+
+    const temp = async () => {
+        // fetch user data api call
+        let res = await tableProps.fetchUsersData(props.pageSize, props.currentPage, props.orderBy);
+
+        // setting users list to tableData props
+        // console.log(res, "checing status", res.data.payload.items);
+        if (res.status === 200) {
+            console.log("response is\ntable Data = ", res.data.payload.items, "\n total = ", res.data.payload.total, "current page = ", res.data.payload.currentPage, " page size = ", res.data.payload.pageSize);
+            props.setTableData(res.data.payload.items);
+            props.setTotal(res.data.payload.total);
+            props.setCurrentPage(res.data.payload.currentPage);
+            props.setNumberOfPages(res.data.payload.numberOfPages);
+            props.setPageSize(res.data.payload.pageSize);
+            props.setItemCountInCurrentPage(res.data.payload.itemCountInCurrentPage);
+
+        }
+        else {
+            (toast.error('server is not respondng!, try in moment', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -21,93 +36,41 @@ function Users(props) {
                 draggable: true,
                 progress: "",
                 theme: "light",
-            });
+            }))
         }
-        setInputFormDisplay(!inputFormDisplay);
-    }
-
-
-
-    // defining table columns
-    const Columns = [
-        {
-            Header: "User ID",
-            accessor: "id",
-
-        },
-        {
-            Header: "First Name",
-            accessor: "first_name"
-        },
-        {
-            Header: "Last Name",
-            accessor: "last_name",
-            canSort: false
-        },
-        {
-            Header: "Email",
-            accessor: "email",
-            canSort: false
-        },
-        {
-            Header: "Gender",
-            accessor: "gender",
-            canSort: true
-
-        },
-        {
-            Header: "Delete",
-            id: "delete",
-            accessor: "delete",
-
-            Cell: (tableProps) => (
-                <span
-                    style={{
-                        cursor: "pointer",
-                        color: "blue",
-                        textDecoration: "none"
-                    }}
-                    onClick={(e) => {
-                        if (window.confirm("Are You Sure ?")) {
-                            // console.log(tableProps.row.original.id, tableProps.state.pageIndex);
-                            props.onDeleteUser(tableProps.row.original.id, tableProps.state.pageIndex);
-
-                        }
-
-                    }}
-                >
-                    <BiTrash />
-                </span>
-            )
-        }
-    ];
+    };
+    React.useEffect(() => {
+        console.log(props.pageSize, props.currentPage, "printint golden numbers")
+        temp();
+    }, [props.pageSize, props.currentPage, props.orderBy]);
 
 
 
 
     return (
         <div className='col-12 col-md-10 mx-auto'>
-            <h1 className='mt-2'>Users</h1>
+            <h1 className='mt-5 px-lg-5'>Registered Users</h1>
             <div className="usersNav mt-md-5 px-lg-5">
-                <button onClick={() => { setInputFormDisplay(!inputFormDisplay) }}>Add New</button>
+                <button >Add New</button>
 
             </div>
 
-
-
-            {inputFormDisplay &&
-                <UserInputModal
-                    handleInputFormChange={handleInputFormChange}
-                />
-            }
-
-
             <Table
                 className="px-lg-5"
-                Columns={Columns}
+                tableData={props.userTableData}
+                Columns={tableProps.Columns}
+                total={props.total}
+                currentPage={props.currentPage}
+                numberOfPages={props.numberOfPages}
+                pageSize={props.pageSize}
+                itemCountInCurrentPage={props.itemCountInCurrentPage}
+                orderBy={props.orderBy}
+                // passing the table pagination set functions
+                setPageSize={props.setPageSize}
+                setCurrentPage={props.setCurrentPage}
+                setOrderBy={props.setOrderBy}
 
             />
-            {/* Toast on Adding new user */}
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -120,29 +83,36 @@ function Users(props) {
                 pauseOnHover
                 theme="light"
             />
-            {/* Same as */}
-            <ToastContainer />
-
         </div>
     )
 }
 
 
+
+// subscribing to redux store
 const mapStateToProps = (state) => {
-
     return {
-        userData: state.userTableRedClientSide.userData,
-        pageNumber: state.userTableRedClientSide.pageNumber
-
+        userTableData: state.userTableRedUnixFor.userTableData,
+        total: state.userTableRedUnixFor.total,
+        currentPage: state.userTableRedUnixFor.currentPage,
+        numberOfPages: state.userTableRedUnixFor.numberOfPages,
+        pageSize: state.userTableRedUnixFor.pageSize,
+        itemCountInCurrentPage: state.userTableRedUnixFor.itemCountInCurrentPage,
+        orderBy: state.userTableRedUnixFor.orderBy,
     };
-
 }
-
 const mapDispatchToProps = (dispatch) => {
     return {
         // dispatching actions returned by action creators
-        onDeleteUser: (userId, pageNumber) => dispatch({ type: actionTypes.DELETE_USER, userId: userId, pageNumber: pageNumber }),
-        onAddUser: () => dispatch({ type: actionTypes.ADD_USER }),
+        setTableData: (userTableData) => dispatch({ type: actionTypes.SET_TABLE_DATA, userTableData: userTableData }),
+        setTotal: (total) => dispatch({ type: actionTypes.SET_TOTAL, total: total }),
+        setCurrentPage: (currentPage) => dispatch({ type: actionTypes.SET_CURRENT_PAGE, currentPage: currentPage }),
+        setNumberOfPages: (numberOfPages) => dispatch({ type: actionTypes.SET_NUMBER_OF_PAGES, numberOfPages: numberOfPages }),
+        setPageSize: (pageSize) => dispatch({ type: actionTypes.SET_PAGESIZE, pageSize: pageSize }),
+        setItemCountInCurrentPage: (itemCountInCurrentPage) => dispatch({ type: actionTypes.SET_ITEM_COUNT_IN_CURRENT_PAGE, itemCountInCurrentPage: itemCountInCurrentPage }),
+        setOrderBy: (orderBy) => dispatch({ type: actionTypes.SET_ORDER_BY, orderBy: orderBy }),
+
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Users);
+// export default Dashboard

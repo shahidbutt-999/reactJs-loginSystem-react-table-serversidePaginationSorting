@@ -4,11 +4,8 @@ import { connect } from "react-redux";
 import * as actionTypes from "./store/actions/actionTypes.js";
 // Components Export
 import AdminPage from './components/adminPage/adminPage';
-import Users from './components/adminPage/usersScreen/users.jsx';
-import Dashboard from './components/adminPage/dashboardScreen/dashboard';
-import Orders from './components/adminPage/ordersScreen/orders';
-import Products from './components/adminPage/productsScreen/products';
-import Customers from './components/adminPage/customersScreen/customers';
+import Dashboard from './components/adminPage/dashboardScreen/dashboard.jsx';
+import Users from './components/adminPage/UsersScreen/users.jsx';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 
 import Testing from './Testing.jsx';
@@ -41,11 +38,8 @@ function App(props) {
         />
         <Route element={<PrivateRoutes />}>
           <Route path="/adminpage" element={<AdminPage />}>
-            <Route path="/adminpage" element={<Users />} />
-            <Route path="/adminpage/dashboard" element={<Dashboard />} />
-            <Route path="/adminpage/orders" element={<Orders />} />
-            <Route path="/adminpage/products" element={<Products />} />
-            <Route path="/adminpage/customers" element={<Customers />} />
+            <Route path="/adminpage" element={<Dashboard />} />
+            <Route path="/adminpage/Users" element={<Users />} />
           </Route>
         </Route>
         <Route path="*" element={<h1> Not Found </h1>} />

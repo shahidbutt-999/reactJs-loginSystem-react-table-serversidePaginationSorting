@@ -67,7 +67,7 @@ const HomeScreen = (props) => {
                     {data.map((e) => (
                         <li className='nav-item' key={e.id}>
                             <Link
-                                to={e.name !== "Users" ? "/adminpage/" + e.name : "/adminpage"}
+                                to={e.name !== "Dashboard" ? "/adminpage/" + e.name : "/adminpage"}
                                 onClick={() => sidbarActive(e.id)}
                                 className={e.active ? 'nav-link active text-white' : 'nav-link text-white'}>
                                 {e.name}

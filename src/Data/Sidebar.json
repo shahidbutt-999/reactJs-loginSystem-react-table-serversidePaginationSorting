@@ -1,32 +1,14 @@
 [
     {
         "id": 0,
-        "name": "Users",
+        "name": "Dashboard",
         "icon": "GiRamProfile",
         "active": true
     },
     {
         "id": 1,
-        "name": "Dashboard",
+        "name": "Users",
         "icon": "GiFireDash",
-        "active": false
-    },
-    {
-        "id": 2,
-        "name": "Orders",
-        "icon": "GiBorderedShield",
-        "active": false
-    },
-    {
-        "id": 3,
-        "name": "Products",
-        "icon": "GiPizzaCutter",
-        "active": false
-    },
-    {
-        "id": 4,
-        "name": "Customers",
-        "icon": "GiPirateGrave",
         "active": false
     }
 ]

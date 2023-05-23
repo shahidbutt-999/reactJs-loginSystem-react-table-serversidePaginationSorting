@@ -1,13 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table'
 import { BiDownArrowAlt, BiUpArrowAlt, BiTransfer } from "react-icons/bi";
 import GlobalFilter from './globalFilter';
 // css of user table is used
 
 function Table(props) {
+    const [isSorted, setIsSorted] = useState(false);
+    const [isSortedDesc, setIsSortedDesc] = useState(false);
     // console.log(props.tableData, "table state from prop sis rendered");
     const [canNextPage, setCanNextPage] = useState(true);
-    const [canPrevPage, setCanPrevPage] = useState(false);
+    const [canPrevPage, setCanPrevPage] = useState(true);
     const columns = props.Columns;
     const data = props.tableData;
     const total = props.total;
@@ -15,10 +17,49 @@ function Table(props) {
     const numberOfPages = props.numberOfPages;
     const pageSize = props.pageSize;
     const itemCountInCurrentPage = props.itemCountInCurrentPage;
-    // destructuring set pagination parameter
+    // Destructuring set pagination parameter
     const setPageSize = props.setPageSize;
     const setCurrentPage = props.setCurrentPage;
     console.log("Table Component is rerendered with these:\nTotal = ", total, "  currentPage = ", currentPage, " numberOfPages = ", numberOfPages, " pageSize = ", pageSize, " itemCountCurrentPage = ", itemCountInCurrentPage);
+
+    // Handle sorting functionality
+    const handleSorting = (col, e) => {
+
+
+        if (isSorted) {
+            if (isSortedDesc) {
+                setIsSorted(false);
+                setIsSortedDesc(false);
+                props.setOrderBy("");
+            }
+            else {
+                setIsSortedDesc(true);
+                props.setOrderBy(col.id + " desc");
+            }
+        }
+        else {
+            setIsSorted(true);
+            props.setOrderBy(col.id);
+        }
+
+        console.log(e.target);
+    }
+
+    // Handle pagination setup
+    useEffect(() => {
+        if (numberOfPages > currentPage) {
+            setCanNextPage(true);
+        } else {
+            setCanNextPage(false);
+        }
+
+        if (currentPage == 1) {
+            setCanPrevPage(false);
+        }
+        else {
+            setCanPrevPage(true);
+        }
+    });
 
     const {
         getTableProps,
@@ -42,26 +83,31 @@ function Table(props) {
                 globalFilter={globalFilter}
             />
             <div className='overflow-auto table-con'>
-                <table className="table dashboard-table col-10 mx-auto" {...getTableProps()}>
+                <table className="table users-table col-10 mx-auto" {...getTableProps()}>
                     <thead className="table-thead">{
                         headerGroups.map((headerGroup) => (
                             <tr {...headerGroup.getHeaderGroupProps()}>
                                 {
                                     headerGroup.headers.map((column, index) => (
                                         // index help will skip the checkbox icon from sorting functionality
-                                        index !== 0 ? (
-                                            <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                        (index !== 0 && index !== 1) ? (
+                                            <th {...column.getHeaderProps()}>
                                                 {column.render("Header")}
 
-                                                <span>
-                                                    {column.isSorted ?
-                                                        (column.isSortedDesc ?
-                                                            <BiUpArrowAlt /> :
-                                                            <BiDownArrowAlt />) :
-                                                        (<BiTransfer
-                                                            style={{ rotate: "90deg" }}
-                                                        />)
+                                                <span
+                                                    onClick={(e) => handleSorting(column, e)}
+                                                    key={123}
+                                                >
+                                                    {
+                                                        isSorted ?
+                                                            (isSortedDesc ?
+                                                                <BiUpArrowAlt />
+                                                                : <BiDownArrowAlt />)
+                                                            : (<BiTransfer
+                                                                style={{ rotate: "90deg" }}
+                                                            />)
                                                     }
+
                                                 </span>
 
 
@@ -130,8 +176,8 @@ function Table(props) {
                 </select>
                 <button
                     onClick={() => {
-                        setCurrentPage(1)
-                        setCanPrevPage();
+                        setCurrentPage(1);
+
                     }}
                     disabled={!canPrevPage}
                 >
@@ -139,8 +185,8 @@ function Table(props) {
                 </button>
                 <button
                     onClick={() => {
-                        setCurrentPage(currentPage - 1)
-                        setCanPrevPage();
+                        setCurrentPage(currentPage - 1);
+
                     }}
                     disabled={!canPrevPage}
                 >
@@ -148,15 +194,16 @@ function Table(props) {
                 </button>
                 <button
                     onClick={() => {
-                        setCurrentPage(currentPage + 1)
-                        setCanPrevPage();
+                        setCurrentPage(currentPage + 1);
                     }}
                     disabled={!canNextPage}
                 >
                     Next
                 </button>
                 <button
-                    onClick={() => setCurrentPage(total > 10 ? Math.ceil(eval(total / pageSize)) : 1)}
+                    onClick={() => {
+                        setCurrentPage(numberOfPages);
+                    }}
                     disabled={!canNextPage}
                 >
                     {">>"}

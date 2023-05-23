@@ -35,7 +35,6 @@ th {
 }
 
 
-
 tr:nth-child(even) {
     background-color: #FFFFFF;
 }
@@ -115,8 +114,12 @@ tr:hover {
 }
 
 
-/* unix for table dashboard table */
-.dashboard-table th {
+/* unix for table users table */
+.users-table th {
     font-size: 1.0rem;
 
+}
+
+.users-table th span {
+    cursor: pointer;
 }

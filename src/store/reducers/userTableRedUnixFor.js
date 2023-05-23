@@ -7,6 +7,7 @@ const initialState = {
     numberOfPages: 1,
     pageSize: 5,
     itemCountInCurrentPage: 5,
+    orderBy: "",
 
 }
 
@@ -47,6 +48,12 @@ const userTableRedUnixFor = (state = initialState, action) => {
             return {
                 ...state,
                 itemCountInCurrentPage: action.itemCountInCurrentPage,
+            };
+        case actionTypes.SET_ORDER_BY:
+            console.log("SET_ITEM_COUNT_IN_CURRENT_PAGE is called from Reducer folder");
+            return {
+                ...state,
+                orderBy: action.orderBy,
             };
         case actionTypes.DELETE_USER:
             console.log("delete user");

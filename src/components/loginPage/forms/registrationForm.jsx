@@ -7,7 +7,6 @@ function RegistrationForm({ setFromEnabler, showToast }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
 
-        console.log(data);
         const userData = JSON.stringify({
             "name": data.name,
             "password": data.password

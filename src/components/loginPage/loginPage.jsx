@@ -15,18 +15,14 @@ function LoginScreen(props) {
     const [formEnabler, setFromEnabler] = useState(false);
     // deleting session storage just so user cannot access this once logged in and if he does, will have to relogin
     useEffect(() => {
-        // console.log(TOKEN);
-        const check = localStorage.getItem(TOKEN);
-        console.log("check", check, props.isLoggedIn);
-        if (check && props.isLoggedIn) {
+        const isLoggedIn = localStorage.getItem(TOKEN);
+        if (isLoggedIn && props.isLoggedIn) {
             nevigate('/adminpage');
         }
         else {
             localStorage.clear();
             props.onLogOut();
         }
-
-
     }, [])
 
     // to show toast on screen

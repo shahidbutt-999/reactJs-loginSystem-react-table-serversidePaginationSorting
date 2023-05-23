@@ -8,21 +8,15 @@ import Dashboard from './components/adminPage/dashboardScreen/dashboard.jsx';
 import Users from './components/adminPage/UsersScreen/users.jsx';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 
-import Testing from './Testing.jsx';
-
-
 
 
 function App(props) {
-  console.log("i am rendering | APP COMPONENT");
-
   const PrivateRoutes = () => {
-    let auth = window.localStorage.getItem("token");
-    console.log(props.isLoggedIn, "private routes in action");
     return (
       props.isLoggedIn ? <Outlet /> : <Navigate to='/' />
     )
   }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -31,7 +25,6 @@ function App(props) {
             <div className="App">
               <header className="App-header">
                 <LoginPage />
-                {/* <Testing /> */}
               </header>
             </div>
           }
@@ -52,7 +45,6 @@ function App(props) {
 
 
 const mapStateToProps = (state) => {
-
   return {
     isLoggedIn: state.isAuthorize.isLoggedIn,
   };
@@ -60,7 +52,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // dispatching actions returned by action creators
     onLogOut: () => dispatch({ type: actionTypes.LOG_OUT }),
   }
 }

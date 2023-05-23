@@ -1,58 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import * as actionTypes from "../../../store/actions/actionTypes";
-import Table from "../../shared/unixForTable/table";
-import * as tableProps from "./usersTableData";
 import { ToastContainer, toast } from 'react-toastify';
+import UserInputModal from "./tableOperation/userAddModal";
+import * as actionTypes from "../../../store/actions/actionTypes";
+import * as tableProps from "./usersTableData";
+import Table from "../../shared/unixForTable/table";
 
 
 
 function Users(props) {
-    console.log("users rendering");
+    const [modalState, setModalState] = useState(false);
+    const [spinner, setSpinner] = useState(false);
 
-    const temp = async () => {
-        // fetch user data api call
-        let res = await tableProps.fetchUsersData(props.pageSize, props.currentPage, props.orderBy);
 
-        // setting users list to tableData props
-        // console.log(res, "checing status", res.data.payload.items);
-        if (res.status === 200) {
-            console.log("response is\ntable Data = ", res.data.payload.items, "\n total = ", res.data.payload.total, "current page = ", res.data.payload.currentPage, " page size = ", res.data.payload.pageSize);
-            props.setTableData(res.data.payload.items);
-            props.setTotal(res.data.payload.total);
-            props.setCurrentPage(res.data.payload.currentPage);
-            props.setNumberOfPages(res.data.payload.numberOfPages);
-            props.setPageSize(res.data.payload.pageSize);
-            props.setItemCountInCurrentPage(res.data.payload.itemCountInCurrentPage);
 
-        }
-        else {
-            (toast.error('server is not respondng!, try in moment', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: "",
-                theme: "light",
-            }))
-        }
-    };
+    // Backend call to update table data
     React.useEffect(() => {
-        console.log(props.pageSize, props.currentPage, "printint golden numbers")
+        const temp = async () => {
+            // fetch user data api call
+            setSpinner(true);
+            let res = await tableProps.fetchUsersData(props.pageSize, props.currentPage, props.orderBy);
+
+            // setting users list to tableData props
+            if (res.status === 200) {
+                props.setTableData(res.data.payload.items);
+                props.setTotal(res.data.payload.total);
+                props.setCurrentPage(res.data.payload.currentPage);
+                props.setNumberOfPages(res.data.payload.numberOfPages);
+                props.setPageSize(res.data.payload.pageSize);
+                props.setItemCountInCurrentPage(res.data.payload.itemCountInCurrentPage);
+
+            }
+            else {
+                (toast.error('server is not respondng!, try in moment', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: "",
+                    theme: "light",
+                }))
+            }
+            setSpinner(false);
+        };
         temp();
     }, [props.pageSize, props.currentPage, props.orderBy]);
-
-
-
 
     return (
         <div className='col-12 col-md-10 mx-auto'>
             <h1 className='mt-5 px-lg-5'>Registered Users</h1>
-            <div className="usersNav mt-md-5 px-lg-5">
-                <button >Add New</button>
+            <div className="usersNav mt-md-5 px-lg-5" >
+                <button
+                    onClick={() => setModalState(true)}
+                >
+                    Add New</button>
 
+                {spinner && <svg width="34" height="34" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,23a9.63,9.63,0,0,1-8-9.5,9.51,9.51,0,0,1,6.79-9.1A1.66,1.66,0,0,0,12,2.81h0a1.67,1.67,0,0,0-1.94-1.64A11,11,0,0,0,12,23Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite" /></path></svg>}
             </div>
 
             <Table
@@ -71,6 +76,11 @@ function Users(props) {
                 setOrderBy={props.setOrderBy}
 
             />
+
+
+            {
+                modalState && <UserInputModal setModalState={setModalState} />
+            }
             <ToastContainer
                 position="top-right"
                 autoClose={5000}

@@ -13,9 +13,6 @@ const HomeScreen = (props) => {
     const [collapse, setCollapse] = useState(false);
     const navRef = useRef();
     // Logout | Clearing Local Storage, just so will have to re-register before login
-    // console.log(props.isLoggedIn, "in adminpage component");
-    console.log("admin page is re rendered");
-
     const handleLogout = () => {
         window.localStorage.clear();
         props.onLogOut();

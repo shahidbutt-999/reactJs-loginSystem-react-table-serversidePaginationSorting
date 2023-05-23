@@ -1,7 +1,7 @@
 import React from 'react'
-import UserInputForm from './userAddForm';
+import UserInputForm from './userInputForm';
 
-function UserInputModal({ handleInputFormChange }) {
+function UserInputModal(props) {
     return (
         <>
             <div
@@ -9,7 +9,7 @@ function UserInputModal({ handleInputFormChange }) {
             >
             </div>
             <UserInputForm
-                handleInputFormChange={handleInputFormChange}
+                setModalState={props.setModalState}
             />
 
         </>

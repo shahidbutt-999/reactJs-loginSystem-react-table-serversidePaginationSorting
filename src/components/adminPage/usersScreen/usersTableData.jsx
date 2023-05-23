@@ -4,7 +4,6 @@ import { TOKEN } from "../../../constants/shared/loginTokenConstants";
 
 // fetch function to get table data
 export const fetchUsersData = async (pageSize, currentPage, orderBy = "") => {
-    console.log("backend call to get user data and the call will be ", pageSize, currentPage);
     const token = window.localStorage.getItem(TOKEN);
     try {
         const res = await axios({
@@ -16,7 +15,6 @@ export const fetchUsersData = async (pageSize, currentPage, orderBy = "") => {
             }
         });
 
-        // console.log(res.data.payload, "from fetch functions");
         return res;
     }
     catch (err) {
@@ -27,35 +25,6 @@ export const fetchUsersData = async (pageSize, currentPage, orderBy = "") => {
 
 // Defining Table Header and Binding Data
 export const Columns = [
-    {
-        Header:
-            <input
-                type="checkbox"
-                onChange={(tableProps) => {
-                    // console.log("header is checked", tableProps);
-                    // get the table rows and set the checkbox to checked, pending
-                }}
-            >
-            </input >,
-        id: "checkbox",
-        accessor: "checkbox",
-        Cell: (tableProps) => (
-            <input
-                type="checkbox"
-                style={{
-                    cursor: "pointer",
-                    color: "blue",
-                    textDecoration: "none"
-                }}
-                onChange={(e) => {
-                    // console.log("i am clicked", tableProps);
-                    // perform action on individual row in table
-                }}
-            >
-
-            </input>
-        )
-    },
     {
         Header: "Actions",
         id: "actions",

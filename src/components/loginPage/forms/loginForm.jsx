@@ -1,25 +1,21 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { connect } from 'react-redux';
-import * as actionTypes from "../../../store/actions/actionTypes.js";
 import axios from 'axios';
+import * as actionTypes from "../../../store/actions/actionTypes.js";
 import { loginFormConstants } from '../../../constants/loginPage/forms/loginFormConstants';
-import { TOKEN } from "../../../constants/shared/loginTokenConstants.js";
-import loginPageConstants from '../../../constants/loginPage/loginPageConstants';
 import { registrationFormConstants } from '../../../constants/loginPage/forms/registrationFormConstants';
+import { TOKEN } from "../../../constants/shared/loginTokenConstants.js";
 import img from "../../../assets/images/6-dots-scale.svg";
 
 function LoginForm(props) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const [isSpinning, setIsSpinning] = useState(false);
-    console.log(props.isLoggedIn, "in login form component");
-
     // Handle form submission
     const onSubmit = async (data) => {
         setIsSpinning(() => true);
-        console.log(data.name, data.password);
         axios.post("https://unixforapi.hazelsoft.net/api/v1/login", {
             "userName": data.name,
             "password": data.password
@@ -27,7 +23,6 @@ function LoginForm(props) {
             .then((response) => {
                 props.showToast("welcome to unixfor");
 
-                // console.log(response);
                 // storing token in local storage
                 window.localStorage.setItem(TOKEN, response.data.payload.token);
 
@@ -36,21 +31,9 @@ function LoginForm(props) {
             })
             .finally((err) => {
                 setIsSpinning(() => false);
+                console.log(err);
                 props.showToast(loginFormConstants.WRONG_USER_ERROR);
             });
-
-
-        // if (userInfo && data.name === userInfo.name && data.password === userInfo.password) {
-        //     navigate("/adminpage");
-        // }
-        // else {
-        //     if (userInfo == null) {
-        //         showToast(loginFormConstants.REGISTER_USER_ERROR);
-        //     }
-        //     else {
-        //         showToast(loginFormConstants.WRONG_USER_ERROR);
-        //     }
-        // }
     };
 
     return (
@@ -110,12 +93,12 @@ function LoginForm(props) {
     )
 }
 
+
 const mapStateToProps = (state) => {
     return {
         isLoggedIn: state.isAuthorize.isLoggedIn
     }
 }
-
 const mapDispatchToProps = (dispatch) => {
     return {
         // dispatching actions returned by action creators

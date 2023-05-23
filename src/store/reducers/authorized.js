@@ -1,6 +1,6 @@
 import * as actionTypes from "../actions/actionTypes";
 let initialState = {
-    isLoggedIn: true
+    isLoggedIn: false
 }
 
 const authorized = (state = initialState, action) => {
